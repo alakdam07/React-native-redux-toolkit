@@ -1,21 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { YellowBox } from "react-native";
+import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
+import store from './store/store';
+import Navigation from './router/'
+import theme from './theme/theme'
+YellowBox.ignoreWarnings([
+  // `Require cycle:`,
+  `ImmutableStateInvariantMiddleware took`,
+  `SerializableStateInvariantMiddleware`
+]);
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <Provider store={store}>
+      <ActionSheetProvider>
+        <ThemeProvider theme={theme}>
+          <Navigation />
+        </ThemeProvider>
+      </ActionSheetProvider>
+    </Provider>
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  );
+};
